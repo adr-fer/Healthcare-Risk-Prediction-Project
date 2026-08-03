@@ -149,13 +149,11 @@ MAX(polypharmacy_flag) AS max_polypharmacy_flag,
 SUM(polypharmacy_flag) AS total_polypharmacy_flag
 FROM hc_encounters;
 
--- Percentage per polypharmacy_flag
+-- Rate per polypharmacy_flag
 SELECT
-    polypharmacy_flag,
-    COUNT(*) * 100.0 / (SELECT COUNT(*) FROM hc_encounters) AS percentage
-FROM hc_encounters
-GROUP BY polypharmacy_flag
-ORDER BY percentage DESC;
+    AVG(
+opioid_prescribed_flag) * 100 AS readmission_rate
+FROM hc_encounters;
 
 -- Total encounters per polypharmacy_flag
 SELECT
@@ -165,9 +163,36 @@ FROM hc_encounters
 GROUP BY polypharmacy_flag
 ORDER BY polypharmacy_flag DESC;
 
--- Standard deviation for 
+-- Standard deviation for polypharmacy_flag
 SELECT
     STDDEV(polypharmacy_flag) AS standard_deviation
+FROM hc_encounters;
+
+-- Descriptive statistics for opioid_prescribed_flag
+-- Average, minimum, maximum, and total for opioid_prescribed_flag   
+SELECT
+AVG(opioid_prescribed_flag) AS avg_opioid_prescribed_flag,
+MIN(opioid_prescribed_flag) AS min_opioid_prescribed_flag,
+MAX(opioid_prescribed_flag) AS max_opioid_prescribed_flag,
+SUM(opioid_prescribed_flag) AS total_opioid_prescribed_flag
+FROM hc_encounters;
+
+-- Rate per opioid_prescribed_flag
+SELECT
+    AVG(opioid_prescribed_flag) * 100 AS readmission_rate
+FROM hc_encounters;
+
+-- Total encounters per opioid_prescribed_flag
+SELECT
+opioid_prescribed_flag,
+COUNT(*) AS total_opioid_prescribed_flag
+FROM hc_encounters
+GROUP BY opioid_prescribed_flag
+ORDER BY opioid_prescribed_flag DESC;
+
+-- Standard deviation for opioid_prescribed_flag
+SELECT
+    STDDEV(opioid_prescribed_flag) AS standard_deviation
 FROM hc_encounters;
 -- =========================================================
 -- 2. FREQUENCY ANALYSIS OF X VARIABLES
