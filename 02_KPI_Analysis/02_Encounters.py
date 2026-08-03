@@ -72,7 +72,7 @@ FROM hc_encounters
 GROUP BY length_of_stay_days
 ORDER BY percentage DESC;
 
--- -- Total encounters per length_of_stay_days
+-- Total encounters per length_of_stay_days
 SELECT
     length_of_stay_days,
     COUNT(*) AS total_encounters
@@ -94,12 +94,12 @@ MAX(adverse_outcome_flag) AS max_adverse_outcome_flag,
 SUM(adverse_outcome_flag) AS total_adverse_outcome_flag
 FROM hc_encounters;
 
--- Rate per length_of_stay_days
+-- Rate per adverse_outcome_flag
 SELECT
-    AVG(adverse_outcome_flag) * 100 AS readmission_rate
+    AVG(adverse_outcome_flag) * 100 AS adverse_outcome_rate
 FROM hc_encounters;
 
--- -- Total encounters per adverse_outcome_flag
+-- Total encounters per adverse_outcome_flag
 SELECT
     adverse_outcome_flag,
     COUNT(*) AS total_adverse_outcome_flag
@@ -127,7 +127,7 @@ SELECT
 readmitted_30_days_flag) * 100 AS readmission_rate
 FROM hc_encounters;
 
--- -- Total encounters per readmitted_30_days_flag
+-- Total encounters per readmitted_30_days_flag
 SELECT
 readmitted_30_days_flag,
 COUNT(*) AS total_readmitted_30_days_flag
@@ -151,8 +151,7 @@ FROM hc_encounters;
 
 -- Rate per polypharmacy_flag
 SELECT
-    AVG(
-opioid_prescribed_flag) * 100 AS readmission_rate
+    AVG(polypharmacy_flag) * 100 AS polypharmacy_rate
 FROM hc_encounters;
 
 -- Total encounters per polypharmacy_flag
@@ -179,7 +178,7 @@ FROM hc_encounters;
 
 -- Rate per opioid_prescribed_flag
 SELECT
-    AVG(opioid_prescribed_flag) * 100 AS readmission_rate
+    AVG(opioid_prescribed_flag) * 100 AS opioid_prescription_rate
 FROM hc_encounters;
 
 -- Total encounters per opioid_prescribed_flag
