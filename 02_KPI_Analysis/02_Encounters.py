@@ -10,6 +10,56 @@
 -- Y variable:
 -- total_cost_usd
 
+-- Total number of unique treatment-cost values
+SELECT COUNT(DISTINCT total_cost_usd) AS unique_cost_values
+FROM hc_encounters;
+
+-- Avg, Max, Min and Total of treatment cost
+SELECT
+AVG(total_cost_usd) AS avg_total_cost_usd,
+MIN(total_cost_usd) AS min_total_cost_usd,
+MAX(total_cost_usd) AS max_total_cost_usd,
+FROM hc_encounters;
+
+-- Sum of treatment cost
+SELECT
+    CAST(ROUND(SUM(total_cost_usd), 2) AS DECIMAL(18,2))
+        AS total_treatment_cost
+FROM hc_encounters;
+
+-- Standard deviation for treatment cost 
+SELECT
+    STDDEV(total_cost_usd) AS standard_deviation
+FROM hc_encounters;
+
+-- Distribution for treatment cost
+SELECT
+    CASE
+WHEN total_cost_usd < 5261.73 THEN '$2,227.00–$5,261.72'
+WHEN total_cost_usd < 8296.45 THEN '$5,261.73–$8,296.44'
+WHEN total_cost_usd < 11331.18 THEN '$8,296.45–$11,331.17'
+ELSE '$11,331.18–$14,365.90'
+        
+    END AS value_range,
+
+    COUNT(*) AS frequency,
+
+    COUNT(*) * 100.0 /
+        SUM(COUNT(*)) OVER () AS percentage
+
+FROM hc_encounters
+WHERE total_cost_usd IS NOT NULL
+
+GROUP BY 1
+ORDER BY 1;
+
+-- Percentiles/quartiles for treatment cost
+SELECT
+    approx_percentile(total_cost_usd, 0.25) AS q1_25th_percentile,
+    approx_percentile(total_cost_usd, 0.50) AS q2_median,
+    approx_percentile(total_cost_usd, 0.75) AS q3_75th_percentile
+FROM hc_encounters
+WHERE total_cost_usd IS NOT NULL;
 -- =========================================================
 -- 2. DESCRIPTIVE ANALYSIS OF X VARIABLES
 -- X variable: 
