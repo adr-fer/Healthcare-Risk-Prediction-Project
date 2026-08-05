@@ -14,7 +14,7 @@
 SELECT COUNT(DISTINCT total_cost_usd) AS unique_cost_values
 FROM hc_encounters;
 
--- Avg, Max, Min and Total of treatment cost
+-- Avg, Max, Min of treatment cost
 SELECT
 AVG(total_cost_usd) AS avg_total_cost_usd,
 MIN(total_cost_usd) AS min_total_cost_usd,
