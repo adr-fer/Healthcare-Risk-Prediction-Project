@@ -319,6 +319,28 @@ ORDER BY percentage DESC;
 
 
 -- discharge_disposition
+-- Unique value count by discharge_disposition
+
+SELECT
+    COUNT(discharge_disposition) AS total_discharge_disposition_observations,
+    COUNT(DISTINCT discharge_disposition ) AS unique_discharge_disposition_values
+FROM hc_encounters;
+
+-- Total count by discharge_disposition
+SELECT
+    discharge_disposition,
+    COUNT(*) AS total_discharge_disposition
+FROM hc_encounters
+GROUP BY discharge_disposition
+ORDER BY discharge_disposition DESC;
+
+-- Percentage per value by discharge_disposition
+SELECT
+    primary_diagnosis_group,
+    COUNT(*) * 100.0 / (SELECT COUNT(*) FROM hc_encounters) AS percentage
+FROM hc_encounters
+GROUP BY primary_diagnosis_group
+ORDER BY percentage DESC;
 
 
 
