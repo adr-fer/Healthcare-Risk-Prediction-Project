@@ -297,7 +297,7 @@ ORDER BY percentage DESC;
 -- Unique value count by primary_diagnosis_group
 SELECT
     COUNT(primary_diagnosis_group) AS total_primary_diagnosis_group_observations,
-    COUNT(DISTINCT department ) AS unique_primary_diagnosis_groupt_values
+    COUNT(DISTINCT primary_diagnosis_group ) AS unique_primary_diagnosis_groupt_values
 FROM hc_encounters;
 
 -- Total count by primary_diagnosis_group
