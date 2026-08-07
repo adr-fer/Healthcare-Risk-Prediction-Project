@@ -285,7 +285,7 @@ FROM hc_encounters
 GROUP BY department
 ORDER BY total_department DESC;
 
--- -- Percentage per value by department 
+-- Percentage per value by department 
 SELECT
     department,
     COUNT(*) * 100.0 / (SELECT COUNT(*) FROM hc_encounters) AS percentage
@@ -294,4 +294,31 @@ GROUP BY department
 ORDER BY percentage DESC;
 
 -- primary_diagnosis_group
+-- Unique value count by primary_diagnosis_group
+SELECT
+    COUNT(primary_diagnosis_group) AS total_primary_diagnosis_group_observations,
+    COUNT(DISTINCT department ) AS unique_primary_diagnosis_groupt_values
+FROM hc_encounters;
+
+-- Total count by primary_diagnosis_group
+
+SELECT
+    primary_diagnosis_group,
+    COUNT(*) AS total_department
+FROM hc_encounters
+GROUP BY primary_diagnosis_group
+ORDER BY primary_diagnosis_group DESC;
+
+-- Percentage per value by primary_diagnosis_group
+SELECT
+    primary_diagnosis_group,
+    COUNT(*) * 100.0 / (SELECT COUNT(*) FROM hc_encounters) AS percentage
+FROM hc_encounters
+GROUP BY primary_diagnosis_group
+ORDER BY percentage DESC;
+
+
 -- discharge_disposition
+
+
+
