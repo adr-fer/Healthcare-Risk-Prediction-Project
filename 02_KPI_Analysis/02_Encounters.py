@@ -336,10 +336,10 @@ ORDER BY discharge_disposition DESC;
 
 -- Percentage per value by discharge_disposition
 SELECT
-    primary_diagnosis_group,
+    discharge_disposition,
     COUNT(*) * 100.0 / (SELECT COUNT(*) FROM hc_encounters) AS percentage
 FROM hc_encounters
-GROUP BY primary_diagnosis_group
+GROUP BY discharge_disposition
 ORDER BY percentage DESC;
 
 
