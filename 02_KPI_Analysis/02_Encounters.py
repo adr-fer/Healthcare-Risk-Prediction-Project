@@ -260,7 +260,7 @@ SELECT
     COUNT(*) AS total_admission_type
 FROM hc_encounters
 GROUP BY admission_type
-ORDER BY total_admission_type DESC
+ORDER BY total_admission_type DESC;
 
 -- Percentage per value by admission_type
 SELECT
@@ -304,7 +304,7 @@ FROM hc_encounters;
 
 SELECT
     primary_diagnosis_group,
-    COUNT(*) COUNT(*) AS total_department
+    COUNT(*) AS total_primary_diagnosis_group
 FROM hc_encounters
 GROUP BY primary_diagnosis_group
 ORDER BY primary_diagnosis_group DESC;
