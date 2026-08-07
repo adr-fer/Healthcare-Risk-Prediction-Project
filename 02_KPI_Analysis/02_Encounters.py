@@ -245,10 +245,53 @@ SELECT
 FROM hc_encounters;
 -- =========================================================
 -- 2. FREQUENCY ANALYSIS OF X VARIABLES
--- encounter_id
--- patient_id
--- facility_id
 -- admission_type
+-- Unique value count by admission_type
+
+SELECT
+    COUNT(admission_type) AS total_admission_type_observations,
+    COUNT(DISTINCT admission_type ) AS unique_admission_type_values
+FROM hc_encounters;
+
+-- Total count by admission_type 
+
+SELECT
+    admission_type,
+    COUNT(*) AS total_admission_type
+FROM hc_encounters
+GROUP BY admission_type
+ORDER BY total_admission_type DESC
+
+-- Percentage per value by admission_type
+SELECT
+    admission_type,
+    COUNT(*) AS total_admission_type
+FROM hc_encounters
+GROUP BY admission_type
+ORDER BY total_admission_type DESC;
+
 -- department
+-- Unique value count by department
+SELECT
+    COUNT(department) AS total_department_observations,
+    COUNT(DISTINCT department ) AS unique_department_values
+FROM hc_encounters;
+
+-- Total count by department
+SELECT
+    department,
+    COUNT(*) AS total_department
+FROM hc_encounters
+GROUP BY department
+ORDER BY total_department DESC;
+
+-- -- Percentage per value by department 
+SELECT
+    department,
+    COUNT(*) * 100.0 / (SELECT COUNT(*) FROM hc_encounters) AS percentage
+FROM hc_encounters
+GROUP BY department
+ORDER BY percentage DESC;
+
 -- primary_diagnosis_group
 -- discharge_disposition
