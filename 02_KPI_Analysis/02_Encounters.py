@@ -270,6 +270,34 @@ FROM hc_encounters
 GROUP BY admission_type
 ORDER BY percentage DESC;
 
+-- Variability of admission type 
+WITH category_counts AS (
+    SELECT
+        admission_type,
+        COUNT(*) AS category_count
+    FROM hc_encounters
+    WHERE admission_type IS NOT NULL
+    GROUP BY admission_type
+),
+
+category_proportions AS (
+    SELECT
+        admission_type,
+        CAST(category_count AS DOUBLE)
+            / SUM(category_count) OVER () AS p,
+        COUNT(*) OVER () AS number_of_categories
+    FROM category_counts
+)
+
+SELECT
+    CASE
+        WHEN MAX(number_of_categories) <= 1 THEN 0
+        ELSE
+            -SUM(p * LN(p))
+            / LN(MAX(number_of_categories)) * 100
+    END AS variability_percentage
+FROM category_proportions;
+
 -- department
 -- Unique value count by department
 SELECT
@@ -292,6 +320,35 @@ SELECT
 FROM hc_encounters
 GROUP BY department
 ORDER BY percentage DESC;
+
+Variability of department:
+WITH category_counts AS (
+    SELECT
+        department,
+        COUNT(*) AS category_count
+    FROM hc_encounters
+    WHERE department IS NOT NULL
+    GROUP BY department
+),
+
+category_proportions AS (
+    SELECT
+        department,
+        CAST(category_count AS DOUBLE)
+            / SUM(category_count) OVER () AS p,
+        COUNT(*) OVER () AS number_of_categories
+    FROM category_counts
+)
+
+SELECT
+    CASE
+        WHEN MAX(number_of_categories) <= 1 THEN 0
+        ELSE
+            -SUM(p * LN(p))
+            / LN(MAX(number_of_categories)) * 100
+    END AS variability_percentage
+FROM category_proportions;
+
 
 -- primary_diagnosis_group
 -- Unique value count by primary_diagnosis_group
@@ -317,6 +374,35 @@ FROM hc_encounters
 GROUP BY primary_diagnosis_group
 ORDER BY percentage DESC;
 
+-- Variability of primary diagnostic group 
+WITH category_counts AS (
+    SELECT
+        primary_diagnosis_group,
+        COUNT(*) AS category_count
+    FROM hc_encounters
+    WHERE primary_diagnosis_group IS NOT NULL
+    GROUP BY primary_diagnosis_group
+),
+
+category_proportions AS (
+    SELECT
+        primary_diagnosis_group,
+        CAST(category_count AS DOUBLE)
+            / SUM(category_count) OVER () AS p,
+        COUNT(*) OVER () AS number_of_categories
+    FROM category_counts
+)
+
+SELECT
+    CASE
+        WHEN MAX(number_of_categories) <= 1 THEN 0
+        ELSE
+            -SUM(p * LN(p))
+            / LN(MAX(number_of_categories)) * 100
+    END AS variability_percentage
+FROM category_proportions;
+
+
 
 -- discharge_disposition
 -- Unique value count by discharge_disposition
@@ -341,6 +427,35 @@ SELECT
 FROM hc_encounters
 GROUP BY discharge_disposition
 ORDER BY percentage DESC;
+
+-- Variability of discharge_disposition
+WITH category_counts AS (
+    SELECT
+        discharge_disposition,
+        COUNT(*) AS category_count
+    FROM hc_encounters
+    WHERE discharge_disposition IS NOT NULL
+    GROUP BY discharge_disposition
+),
+
+category_proportions AS (
+    SELECT
+        discharge_disposition,
+        CAST(category_count AS DOUBLE)
+            / SUM(category_count) OVER () AS p,
+        COUNT(*) OVER () AS number_of_categories
+    FROM category_counts
+)
+
+SELECT
+    CASE
+        WHEN MAX(number_of_categories) <= 1 THEN 0
+        ELSE
+            -SUM(p * LN(p))
+            / LN(MAX(number_of_categories)) * 100
+    END AS variability_percentage
+FROM category_proportions;
+
 
 
 
